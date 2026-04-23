@@ -1,21 +1,60 @@
-@model IEnumerable<Product>
-
+@model IEnumerable<Category>
 <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">Product</th>
-      <th scope="col" class="text-end">Price</th>
+      <th scope="col">
+        <div class="input-group">
+          <select class="form-select" id="CategoryId">
+          @foreach (Category c in Model)
+          {
+            if (c.CategoryId == ViewBag.id)
+              { <option value="@c.CategoryId" selected>@c.CategoryName</option> }
+            else
+              { <option value="@c.CategoryId">@c.CategoryName</option> }
+          }
+          </select>
+          <input class="form-check-input ms-2 mt-2" type="checkbox" id="Discontinued">
+          <label class="form-check-label ms-2 mt-1" for="Discontinued">Discontinued</label>
+        </div>
+      </th>
+      <th scope="col" class="text-end">Price ($)</th>
       <th scope="col" class="text-end">Stock</th>
     </tr>
 </thead>
-<tbody>
-  @foreach (Product p in Model)
-  {
-    <tr>
-      <td>@p.ProductName</td>
-      <td class="text-end">@string.Format("{0:c}", p.UnitPrice)</td>
-      <td class="text-end">@p.UnitsInStock</td>
-    </tr>
-  }
-  </tbody>
+<tbody id="product_rows" data-id="@ViewBag.id">
+</tbody>
 </table>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    console.log("dom content loaded");
+    fetchProducts();
+  });
+  document.getElementById("CategoryId").addEventListener("change", (e) => {
+    console.log('dcategory changedd');
+    document.getElementById('product_rows').dataset['id'] = e.target.value;
+    fetchProducts();
+  });
+  document.getElementById('Discontinued').addEventListener("change", (e) => {
+    console.log('discontinued changed');
+    fetchProducts();
+  });
+  async function fetchProducts() {
+    const id = document.getElementById('product_rows').dataset['id'];
+    const discontinued = document.getElementById('Discontinued').checked ? "" : "/discontinued/false";
+    const { data: fetchedProducts } = await axios.get(`../../api/category/${id}/product${discontinued}`);
+    // console.log(fetchedProducts);
+    let product_rows = "";
+    fetchedProducts.map(product => {
+      const css = product.discontinued ? " class='discontinued'" : "";
+      console.log(css);
+      product_rows += 
+        `<tr${css}>
+          <td>${product.productName}</td>
+          <td class="text-end">${product.unitPrice.toFixed(2)}</td>
+          <td class="text-end">${product.unitsInStock}</td>
+        </tr>`;
+    });
+    document.getElementById('product_rows').innerHTML = product_rows;
+  }
+</script>

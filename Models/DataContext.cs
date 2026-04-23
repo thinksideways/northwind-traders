@@ -14,4 +14,17 @@ public class DataContext : DbContext
     Customers.Add(customer);
     SaveChanges();
   }
+
+  public void EditCustomer(Customer customer)
+  {
+    var customerToUpdate = Customers.FirstOrDefault(c => c.CustomerId == customer.CustomerId);
+    customerToUpdate.Address = customer.Address;
+    customerToUpdate.City = customer.City;
+    customerToUpdate.Region = customer.Region;
+    customerToUpdate.PostalCode = customer.PostalCode;
+    customerToUpdate.Country = customer.Country;
+    customerToUpdate.Phone = customer.Phone;
+    customerToUpdate.Fax = customer.Fax;
+    SaveChanges();
+  }
 }
