@@ -1,3 +1,4 @@
+
 # Northwind Traders - Employee Inventory Management Implementation Plan
 
 This guide breaks down the requirements for implementing employee login and inventory management into actionable steps.
