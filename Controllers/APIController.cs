@@ -29,11 +29,11 @@ namespace Northwind.Controllers
         // adds a row to the cartitem table
         public CartItem Post([FromBody] CartItemJSON cartItem) => _dataContext.AddToCart(cartItem);
 
-        [HttpGet, Route("api/product/inventory"), Authorize(Roles = "inventory-manager")]
+        [HttpGet, Route("api/product/inventory"), Authorize(Roles = "inventory-manager,northwind-employee")]
         // returns all products that are not discontinued
         public IEnumerable<Product> GetInventory() => _dataContext.Products.Where(p => !p.Discontinued).OrderBy(p => p.ProductName);
 
-        [HttpPost, Route("api/product/updateStock"), Authorize(Roles = "inventory-manager")]
+        [HttpPost, Route("api/product/updateStock"), Authorize(Roles = "inventory-manager,northwind-employee")]
         // updates the units in stock for a product
         public Product UpdateStock([FromBody] InventoryUpdateJSON inventoryUpdate)
         {

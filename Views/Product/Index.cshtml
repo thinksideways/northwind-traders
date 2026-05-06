@@ -1,5 +1,5 @@
 @model IEnumerable<Category>
-<div id="User" style="display:none;" data-email="@User.Identity.Name" data-customer="@User.IsInRole("northwind-customer")"></div>
+<div id="User" style="display:none;" data-email="@User.Identity.Name" data-customer="@User.IsInRole("northwind-customer")" data-employee="@User.IsInRole("northwind-employee")"></div>
 
 <div class="row align-items-end mb-4 g-3">
     <div class="col-md-4">
