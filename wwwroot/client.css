@@ -163,6 +163,18 @@ body {
     filter: grayscale(100%);
 }
 
+.out-of-stock td {
+    background-color: rgba(255, 182, 193, 0.5) !important; /* Slightly more opaque hazy pink */
+}
+
+.restocked td {
+    background-color: rgba(144, 238, 144, 0.5) !important; /* Light hazy success green */
+}
+
+.low-stock td {
+    background-color: rgba(255, 235, 156, 0.6) !important; /* Hazy yellow-ish orange warning */
+}
+
 .badge-stock {
     font-size: 0.8rem;
     font-weight: 600;
