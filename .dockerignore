@@ -1,0 +1,8 @@
+bin/
+obj/
+.git/
+.vs/
+.vscode/
+*.user
+*.sln.dotSettings
+.DS_Store
