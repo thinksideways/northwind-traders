@@ -24,7 +24,7 @@ public class AccountController(UserManager<AppUser> userMgr, SignInManager<AppUs
           Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(user, details.Password, false, false);
           if (result.Succeeded)
           {
-            return Redirect(returnUrl ?? "/");
+            return Redirect(returnUrl ?? "~/");
           }
         }
         ModelState.AddModelError(nameof(UserLogin.Email), "Invalid user or password");

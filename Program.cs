@@ -29,6 +29,12 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(confi
 builder.Services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(configuration["Data:AppIdentity:ConnectionString"]));
 builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
 
+// Configure the application cookie to use the subpath
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.Path = "/northwind-final";
+});
+
 var app = builder.Build();
 
 // Enable Forwarded Headers and Path Base for Reverse Proxy
